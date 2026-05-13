@@ -90,7 +90,7 @@ const Workouts = () => {
             </div>
 
             {/* Workout Cards Stack */}
-            <div className="relative h-[500px] max-w-lg mx-auto px-4">
+            <div className="relative h-[520px] max-w-lg mx-auto px-4">
                 {workouts.slice(currentIndex, currentIndex + 3).map((workout, index) => {
                     const isTop = index === 0;
 
@@ -108,13 +108,15 @@ const Workouts = () => {
                             }}
                             drag={isTop ? true : false}
                             dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                            dragElastic={1}
+                            dragElastic={0.7}
+                            dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
                             onDragEnd={isTop ? handleDragEnd : undefined}
-                            whileTap={isTop ? { scale: 1.05 } : {}}
+                            whileTap={isTop ? { scale: 1.02 } : {}}
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         >
-                            <div className="glass rounded-3xl overflow-hidden h-full relative">
+                            <div className="glass rounded-3xl overflow-hidden h-full relative flex flex-col">
                                 {/* Workout Image */}
-                                <div className="relative h-64 overflow-hidden">
+                                <div className="relative h-52 overflow-hidden flex-shrink-0">
                                     <img
                                         src={workout.thumbnail}
                                         alt={workout.name}
@@ -138,50 +140,50 @@ const Workouts = () => {
                                 </div>
 
                                 {/* Workout Info */}
-                                <div className="p-6 space-y-4">
-                                    <div>
-                                        <h2 className="text-2xl font-bold text-white mb-2">{workout.name}</h2>
-                                        <p className="text-gray-400 text-sm">{workout.description}</p>
+                                <div className="p-5 space-y-3 flex-1 flex flex-col overflow-y-auto">
+                                    <div className="flex-shrink-0">
+                                        <h2 className="text-xl font-bold text-white mb-1.5 leading-tight">{workout.name}</h2>
+                                        <p className="text-gray-400 text-xs line-clamp-2">{workout.description}</p>
                                     </div>
 
                                     {/* Stats */}
-                                    <div className="grid grid-cols-3 gap-3">
-                                        <div className="glass-dark p-3 rounded-xl text-center">
-                                            <Clock className="w-5 h-5 text-primary mx-auto mb-1" />
-                                            <p className="text-xs text-gray-400">Duration</p>
-                                            <p className="text-sm font-bold text-white">{workout.duration} min</p>
+                                    <div className="grid grid-cols-3 gap-2 flex-shrink-0">
+                                        <div className="glass-dark p-2.5 rounded-xl text-center">
+                                            <Clock className="w-4 h-4 text-primary mx-auto mb-1" />
+                                            <p className="text-[10px] text-gray-400 mb-0.5">Duration</p>
+                                            <p className="text-xs font-bold text-white">{workout.duration} min</p>
                                         </div>
-                                        <div className="glass-dark p-3 rounded-xl text-center">
-                                            <Flame className="w-5 h-5 text-orange-500 mx-auto mb-1" />
-                                            <p className="text-xs text-gray-400">Calories</p>
-                                            <p className="text-sm font-bold text-white">{workout.calories}</p>
+                                        <div className="glass-dark p-2.5 rounded-xl text-center">
+                                            <Flame className="w-4 h-4 text-orange-500 mx-auto mb-1" />
+                                            <p className="text-[10px] text-gray-400 mb-0.5">Calories</p>
+                                            <p className="text-xs font-bold text-white">{workout.calories}</p>
                                         </div>
-                                        <div className="glass-dark p-3 rounded-xl text-center">
-                                            <TrendingUp className="w-5 h-5 text-green-500 mx-auto mb-1" />
-                                            <p className="text-xs text-gray-400">Category</p>
-                                            <p className="text-sm font-bold text-white">{workout.category}</p>
+                                        <div className="glass-dark p-2.5 rounded-xl text-center">
+                                            <TrendingUp className="w-4 h-4 text-green-500 mx-auto mb-1" />
+                                            <p className="text-[10px] text-gray-400 mb-0.5">Category</p>
+                                            <p className="text-xs font-bold text-white truncate">{workout.category}</p>
                                         </div>
                                     </div>
 
                                     {/* Trainer */}
-                                    <div className="flex items-center gap-3 glass-dark p-3 rounded-xl">
+                                    <div className="flex items-center gap-2.5 glass-dark p-2.5 rounded-xl flex-shrink-0">
                                         <img
                                             src={workout.trainer.avatar}
                                             alt={workout.trainer.name}
-                                            className="w-10 h-10 rounded-full"
+                                            className="w-9 h-9 rounded-full"
                                         />
-                                        <div>
-                                            <p className="text-xs text-gray-400">Trainer</p>
-                                            <p className="text-sm font-bold text-white">{workout.trainer.name}</p>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-[10px] text-gray-400">Trainer</p>
+                                            <p className="text-xs font-bold text-white truncate">{workout.trainer.name}</p>
                                         </div>
                                     </div>
 
                                     {/* Tags */}
-                                    <div className="flex flex-wrap gap-2">
+                                    <div className="flex flex-wrap gap-1.5 flex-shrink-0 pb-2">
                                         {workout.tags.map((tag) => (
                                             <span
                                                 key={tag}
-                                                className="px-3 py-1 bg-primary/20 text-primary text-xs rounded-full font-medium"
+                                                className="px-2.5 py-0.5 bg-primary/20 text-primary text-[10px] rounded-full font-medium"
                                             >
                                                 {tag}
                                             </span>
@@ -230,10 +232,10 @@ const Workouts = () => {
                         <div
                             key={index}
                             className={`h-1 rounded-full transition-all ${index === currentIndex
-                                    ? 'w-8 bg-primary'
-                                    : index < currentIndex
-                                        ? 'w-1 bg-primary/50'
-                                        : 'w-1 bg-gray-700'
+                                ? 'w-8 bg-primary'
+                                : index < currentIndex
+                                    ? 'w-1 bg-primary/50'
+                                    : 'w-1 bg-gray-700'
                                 }`}
                         />
                     ))}

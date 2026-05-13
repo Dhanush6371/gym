@@ -19,14 +19,14 @@ const MainLayout = () => {
 
     const unreadCount = notifications.filter(n => !n.read).length;
 
-    // Confetti effect
+    // Confetti effect - Reduced for performance
     useEffect(() => {
         if (showConfetti) {
-            const pieces = Array.from({ length: 50 }, (_, i) => ({
+            const pieces = Array.from({ length: 30 }, (_, i) => ({
                 id: i,
                 left: Math.random() * 100,
-                delay: Math.random() * 0.5,
-                duration: 2 + Math.random() * 2,
+                delay: Math.random() * 0.3,
+                duration: 1.5 + Math.random() * 1,
             }));
             setConfettiPieces(pieces);
         } else {
@@ -82,10 +82,10 @@ const MainLayout = () => {
             {/* Main Content */}
             <motion.main
                 key={location.pathname}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
                 className="pb-4"
             >
                 <Outlet />
