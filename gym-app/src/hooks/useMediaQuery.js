@@ -1,0 +1,26 @@
+import { useState, useEffect } from 'react';
+
+export const useMediaQuery = (query) => {
+    const [matches, setMatches] = useState(false);
+
+    useEffect(() => {
+        const media = window.matchMedia(query);
+
+        // Set initial value
+        setMatches(media.matches);
+
+        // Create event listener
+        const listener = (e) => setMatches(e.matches);
+
+        // Add listener
+        media.addEventListener('change', listener);
+
+        // Cleanup
+        return () => media.removeEventListener('change', listener);
+    }, [query]);
+
+    return matches;
+};
+
+export const useIsDesktop = () => useMediaQuery('(min-width: 1024px)');
+export const useIsMobile = () => useMediaQuery('(max-width: 1023px)');
